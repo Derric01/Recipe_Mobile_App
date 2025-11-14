@@ -1,6 +1,6 @@
 <h1 align="center">🍽️ Recipe Finder Mobile App 🍽️</h1>
 
-![Demo App](/mobile/assets/images//screenshot-for-readme.png)
+
 
 ## Features
 
@@ -288,7 +288,3 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 📞 Support
 
 If you have any questions or need help with setup, please open an issue on GitHub.
-
----
-
-**Made with ❤️ by Derric Samson**
