@@ -17,9 +17,19 @@ const FavoritesScreen = () => {
 
   useEffect(() => {
     const loadFavorites = async () => {
+      if (!user?.id) {
+        setLoading(false);
+        return;
+      }
+
       try {
-        const response = await fetch(`${API_URL}/favorites/${user.id}`);
-        if (!response.ok) throw new Error("Failed to fetch favorites");
+        const response = await fetch(`${API_URL}/favorites/${user.id}`, {
+          timeout: 5000,
+        });
+        
+        if (!response.ok) {
+          throw new Error("Network error");
+        }
 
         const favorites = await response.json();
 
@@ -31,15 +41,16 @@ const FavoritesScreen = () => {
 
         setFavoriteRecipes(transformedFavorites);
       } catch (error) {
-        console.log("Error loading favorites", error);
-        Alert.alert("Error", "Failed to load favorites");
+        console.log("Error loading favorites", error.message);
+        // Don't show error alert, just show empty state
+        setFavoriteRecipes([]);
       } finally {
         setLoading(false);
       }
     };
 
     loadFavorites();
-  }, [user.id]);
+  }, [user?.id]);
 
   const handleSignOut = () => {
     Alert.alert("Logout", "Are you sure you want to logout?", [

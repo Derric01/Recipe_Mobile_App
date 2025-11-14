@@ -2,7 +2,7 @@ import { View, Text, TouchableOpacity, StyleSheet, Dimensions } from "react-nati
 import { Ionicons } from "@expo/vector-icons";
 import { Image } from "expo-image";
 import { useRouter } from "expo-router";
-import { COLORS } from "../constants/Colors";
+import { COLORS } from "../constants/colors";
 import { LinearGradient } from 'expo-linear-gradient';
 
 const { width } = Dimensions.get('window');

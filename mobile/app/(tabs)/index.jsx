@@ -104,21 +104,21 @@ const HomeScreen = () => {
         {/*  ANIMAL ICONS */}
         <View style={homeStyles.welcomeSection}>
           <Image
-            source={require("../../assets/images/lamb.png")}
+            source={require("../../assets/images/lamb.jpg")}
             style={{
               width: 100,
               height: 100,
             }}
           />
           <Image
-            source={require("../../assets/images/chicken.png")}
+            source={require("../../assets/images/chiken.webp")}
             style={{
               width: 100,
               height: 100,
             }}
           />
           <Image
-            source={require("../../assets/images/pork.png")}
+            source={require("../../assets/images/tomato.jpg")}
             style={{
               width: 100,
               height: 100,

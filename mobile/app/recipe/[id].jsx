@@ -28,13 +28,24 @@ const RecipeDetailScreen = () => {
 
   useEffect(() => {
     const checkIfSaved = async () => {
+      if (!userId) return;
+      
       try {
-        const response = await fetch(`${API_URL}/favorites/${userId}`);
+        const response = await fetch(`${API_URL}/favorites/${userId}`, {
+          timeout: 5000, // 5 second timeout
+        });
+        
+        if (!response.ok) {
+          console.log("Failed to fetch favorites, using offline mode");
+          return;
+        }
+        
         const favorites = await response.json();
         const isRecipeSaved = favorites.some((fav) => fav.recipeId === parseInt(recipeId));
         setIsSaved(isRecipeSaved);
       } catch (error) {
-        console.error("Error checking if recipe is saved:", error);
+        console.log("Error checking if recipe is saved (offline mode):", error.message);
+        // Don't show error to user, just use offline mode
       }
     };
 
@@ -70,6 +81,11 @@ const RecipeDetailScreen = () => {
   };
 
   const handleToggleSave = async () => {
+    if (!userId) {
+      Alert.alert("Sign In Required", "Please sign in to save recipes");
+      return;
+    }
+
     setIsSaving(true);
 
     try {
@@ -77,10 +93,15 @@ const RecipeDetailScreen = () => {
         // remove from favorites
         const response = await fetch(`${API_URL}/favorites/${userId}/${recipeId}`, {
           method: "DELETE",
+          timeout: 5000,
         });
-        if (!response.ok) throw new Error("Failed to remove recipe");
+        
+        if (!response.ok) {
+          throw new Error("Network error - please check your connection");
+        }
 
         setIsSaved(false);
+        Alert.alert("Success", "Recipe removed from favorites!");
       } else {
         // add to favorites
         const response = await fetch(`${API_URL}/favorites`, {
@@ -96,14 +117,22 @@ const RecipeDetailScreen = () => {
             cookTime: recipe.cookTime,
             servings: recipe.servings,
           }),
+          timeout: 5000,
         });
 
-        if (!response.ok) throw new Error("Failed to save recipe");
+        if (!response.ok) {
+          throw new Error("Network error - please check your connection");
+        }
+        
         setIsSaved(true);
+        Alert.alert("Success", "Recipe saved to favorites!");
       }
     } catch (error) {
-      console.error("Error toggling recipe save:", error);
-      Alert.alert("Error", `Something went wrong. Please try again.`);
+      console.log("Error toggling recipe save (offline mode):", error.message);
+      Alert.alert(
+        "Offline Mode", 
+        "Unable to save recipes while offline. Please check your internet connection."
+      );
     } finally {
       setIsSaving(false);
     }
@@ -211,8 +240,14 @@ const RecipeDetailScreen = () => {
                 <WebView
                   style={recipeDetailStyles.webview}
                   source={{ uri: getYouTubeEmbedUrl(recipe.youtubeUrl) }}
-                  allowsFullscreenVideo
+                  allowsFullscreenVideo={true}
+                  allowsInlineMediaPlayback={true}
                   mediaPlaybackRequiresUserAction={false}
+                  javaScriptEnabled={true}
+                  domStorageEnabled={true}
+                  startInLoadingState={true}
+                  scalesPageToFit={true}
+                  mixedContentMode="compatibility"
                 />
               </View>
             </View>

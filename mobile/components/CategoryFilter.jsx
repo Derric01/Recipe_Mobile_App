@@ -1,6 +1,6 @@
 import { View, Text, TouchableOpacity, ScrollView, StyleSheet } from "react-native";
 import { Image } from "expo-image";
-import { COLORS } from "../constants/Colors";
+import { COLORS } from "../constants/colors";
 import { Ionicons } from "@expo/vector-icons";
 
 export default function CategoryFilter({ categories, selectedCategory, onSelectCategory }) {

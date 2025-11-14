@@ -51,8 +51,9 @@ const SignInScreen = () => {
         console.error(JSON.stringify(signInAttempt, null, 2));
       }
     } catch (err) {
-      Alert.alert("Error", err.errors?.[0]?.message || "Sign in failed");
-      console.error(JSON.stringify(err, null, 2));
+      const errorMessage = err.errors?.[0]?.message || "Sign in failed";
+      Alert.alert("Sign In Error", errorMessage);
+      console.error("Sign in error:", JSON.stringify(err, null, 2));
     } finally {
       setLoading(false);
     }
@@ -71,7 +72,7 @@ const SignInScreen = () => {
         >
           <View style={authStyles.imageContainer}>
             <Image
-              source={require("../../assets/images/i1.png")}
+              source={require("../../assets/images/create.webp")}
               style={authStyles.image}
               contentFit="contain"
             />
