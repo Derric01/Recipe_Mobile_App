@@ -11,11 +11,7 @@
 - ❤️ Personalized Favorites Collection
 - ⚡ Modern Tech Stack: React Native + Express + PostgreSQL + Expo
 - 🌈 Beautiful UI with Multiple Color Themes
-- 🆓 Open Source and Free to Use
-
----
-
-## 📱 Screenshots & Demo
+- 🆓 Open Source and Free to use
 
 The app features a completely redesigned UI with:
 - Modern card-based design
